@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:contentPadding="12dp"
+        android:elevation="12dp"
+        app:cardBackgroundColor="#00000000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/course_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Android Course"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/instructor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mohamed Nabil"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1/9/2018"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
