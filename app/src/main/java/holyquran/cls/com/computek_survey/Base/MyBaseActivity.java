@@ -34,7 +34,14 @@ public class MyBaseActivity extends AppCompatActivity {
                 })
                 .show();
     }
+    public void ShowMessage(String title,String message,String pos){
+        dialog= new MaterialDialog.Builder(activity)
+                .title(title)
+                .content(message)
+                .positiveText(pos)
 
+                .show();
+    }
     public void ShowProgressBar(){
         dialog=new MaterialDialog.Builder(activity)
                 .title("Loading")
@@ -44,7 +51,7 @@ public class MyBaseActivity extends AppCompatActivity {
                 .show();
     }
 
-    void HideProgressBar(){
+    public void HideProgressBar(){
         if (dialog!=null)
         dialog.dismiss();
     }
