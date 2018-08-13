@@ -9,22 +9,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIManager {
 
-    public static Retrofit retrofit;
+    public static Retrofit retrofitInstance;
 
     private static Retrofit getInstance(){
 
-        if (retrofit==null){
-         retrofit = new Retrofit.Builder()
+        if (retrofitInstance==null){
+            retrofitInstance = new Retrofit.Builder()
                 .baseUrl("http://hambozo.com/survey/api/moderator/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         }
-        return retrofit;
+        return retrofitInstance;
 
     }
 
    public static SurveyServices getServices(){
-        if (retrofit==null)
+        if (retrofitInstance==null)
             getInstance();
 
         return getInstance().create(SurveyServices.class);

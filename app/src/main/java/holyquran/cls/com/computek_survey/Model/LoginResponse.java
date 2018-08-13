@@ -1,4 +1,4 @@
-package holyquran.cls.com.computek_survey.API;
+package holyquran.cls.com.computek_survey.Model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -31,7 +31,10 @@ public class MyBaseFragment extends Fragment {
        activity.ShowProgressBar();
     }
 
-    void HideProgressBar(){
+    public void HideProgressBar(){
         activity.HideProgressBar();
+    }
+    public void ShowMessage(String title,String message,String pos){
+        activity.ShowMessage(title,message,pos);
     }
 }

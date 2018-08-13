@@ -34,9 +34,9 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Course course= AllCourses.get(position);
-        holder.coursDate.setText(course.getDate());
-        holder.coursName.setText(course.getCourseName());
-        holder.coursInstructor.setText(course.getCourseInstructor());
+//        holder.coursDate.setText(course.getDate());
+        holder.coursName.setText(course.getName());
+        holder.coursInstructor.setText(course.getDescription());
     }
 
     @Override
