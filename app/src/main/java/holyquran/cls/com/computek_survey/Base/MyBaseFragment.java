@@ -23,8 +23,8 @@ public class MyBaseFragment extends Fragment {
 
     }
 
-    public void ShowConfirmationDialoge(String title,String message,String pos,String neg){
-        activity.ShowConfirmationDialoge(title,message,pos,neg);
+    public void ShowConfirmationDialoge(String title, String message, String pos, String neg, MaterialDialog.SingleButtonCallback okCallBack){
+        activity.ShowConfirmationDialoge(title,message,pos,neg,okCallBack);
     }
 
     public void ShowProgressBar(){

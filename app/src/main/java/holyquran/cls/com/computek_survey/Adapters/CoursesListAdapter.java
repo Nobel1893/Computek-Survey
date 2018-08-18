@@ -19,6 +19,11 @@ import holyquran.cls.com.computek_survey.R;
 public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.ViewHolder> {
 
     ArrayList<Course> AllCourses;
+    OnItemClickListner onItemClickListner;
+
+    public void setOnItemClickListner(OnItemClickListner onItemClickListner) {
+        this.onItemClickListner = onItemClickListner;
+    }
 
     public CoursesListAdapter(ArrayList<Course> allCourses) {
         AllCourses = allCourses;
@@ -32,11 +37,18 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Course course= AllCourses.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final Course course= AllCourses.get(position);
 //        holder.coursDate.setText(course.getDate());
         holder.coursName.setText(course.getName());
         holder.coursInstructor.setText(course.getDescription());
+        holder.coursName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListner!=null)
+                    onItemClickListner.onItemClick(course,position);
+            }
+        });
     }
 
     @Override
@@ -56,6 +68,10 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
             coursDate = view.findViewById(R.id.date);
         }
 
+    }
+
+    public static interface OnItemClickListner{
+        void onItemClick(Course course,int pos);
     }
 
 

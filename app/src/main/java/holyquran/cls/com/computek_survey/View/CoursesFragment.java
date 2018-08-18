@@ -1,6 +1,7 @@
 package holyquran.cls.com.computek_survey.View;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,7 +66,14 @@ public class CoursesFragment extends MyBaseFragment {
                 if (response.body().getStatus().equals("success")){
                     courses=response.body().getCourses();
                     adapter = new CoursesListAdapter(courses);
+                    adapter.setOnItemClickListner(new CoursesListAdapter.OnItemClickListner() {
+                        @Override
+                        public void onItemClick(Course course, int pos) {
+                            startActivity(new Intent(activity, Register.class));
+                        }
+                    });
                     CoursesList.setAdapter(adapter);
+
                 }else ShowMessage("error",response.body().getMessage(),"ok");
             }
 

@@ -19,4 +19,11 @@ public interface  SurveyServices {
     @FormUrlEncoded
     @POST("entities")
     Call<CoursesResponse> getCourses(@Field("moderator_id") int id, @Field("password") String password);
+//?moderator_id=1&password=123456&visitor_name=nabil&visitor_mobile=123456&entity_id=32&visitor_gender=male
+
+    @FormUrlEncoded
+    @POST("visitors/create")
+    Call<CoursesResponse> AddVisitor(@Field("moderator_id") int id, @Field("password") String password
+            , @Field("visitor_name") String visitor_name,@Field("visitor_mobile") String visitor_mobile,
+                                     @Field("visitor_gender") String visitor_gender);
 }

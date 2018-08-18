@@ -1,6 +1,8 @@
 package holyquran.cls.com.computek_survey.View;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
@@ -52,19 +54,20 @@ public class Login extends MyBaseActivity {
 
 
 
-    void Login(String username, final String password){
+    void Login(final String username, final String password){
         ShowProgressBar();
         APIManager.getServices().Login(username,password)
                 .enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         HideProgressBar();
-
                         LoginResponse loginResponse=response.body();
                         if (loginResponse.getMyStatus().equals("success")){
-                        ShowMessage("success",loginResponse.getData().getFull_name(),"ok");
+//                        ShowMessage("success",loginResponse.getData().getFull_name(),"ok");
                             DataHolder.password=password;
                             DataHolder.loggedInUser=loginResponse.getData();
+                            saveData("user_name",username);
+                            saveData("password",password);
                         startActivity(new Intent(activity,HomeActivity.class));
                         finish();
                         }else {

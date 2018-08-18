@@ -1,5 +1,6 @@
 package holyquran.cls.com.computek_survey.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -9,8 +10,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import holyquran.cls.com.computek_survey.Base.MyBaseActivity;
+import holyquran.cls.com.computek_survey.DataHolder;
 import holyquran.cls.com.computek_survey.R;
 
 public class HomeActivity extends MyBaseActivity
@@ -48,27 +52,7 @@ public class HomeActivity extends MyBaseActivity
         }
     }
 
-  /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -80,6 +64,15 @@ public class HomeActivity extends MyBaseActivity
             fragment=new CoursesFragment();
         }else if (id == R.id.nav_about_us) {
             fragment=new AboutUsFragment();
+        } else if (id == R.id.nav_logout) {
+            saveData("user_name",null);
+            saveData("password",null);
+            DataHolder.password=null;
+            DataHolder.loggedInUser=null;
+            startActivity(new Intent(activity,Splash.class));
+            finish();
+            return true;
+
         }
         getSupportFragmentManager()
                 .beginTransaction()
@@ -89,5 +82,23 @@ public class HomeActivity extends MyBaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void ShowHomeAsUpEnabled(){
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getIntent().getStringExtra("title")!=null){
+            TextView title= findViewById(R.id.title);
+            title.setText(getIntent().getStringExtra("title"));
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
