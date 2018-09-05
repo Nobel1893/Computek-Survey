@@ -2,6 +2,10 @@ package holyquran.cls.com.computek_survey.View;
 
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,9 +28,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Calendar;
+
 import holyquran.cls.com.computek_survey.Base.MyBaseFragment;
 import holyquran.cls.com.computek_survey.LocationProvider.MyLocationProvider;
 import holyquran.cls.com.computek_survey.R;
+import holyquran.cls.com.computek_survey.Recievers.MyLocationReciever;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,10 +60,25 @@ public class AboutUsFragment extends MyBaseFragment implements OnMapReadyCallbac
 
         if (CheckPermessoinAllowed()){
             printUserLocation();
+            SchedualeLocationUpdateJob();
         }else {
             RequestLocationPermession();
         }
         return mainView;
+    }
+
+    private void SchedualeLocationUpdateJob() {
+
+        Calendar cal = Calendar.getInstance();
+        // add alarmTriggerTime seconds to the calendar object
+        // cal.add(Calendar.SECOND, alarmTriggerTime);
+        cal.add(Calendar.SECOND, 5);
+        Intent i=new Intent(activity,MyLocationReciever.class);
+         PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 132, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),5*1000, pendingIntent);//set alarm manager with entered timer by converting into milliseconds
+      //  Toast.makeText(this, "Alarm Set for " + alarmTriggerTime + " seconds.", Toast.LENGTH_SHORT).show();
+
     }
 
     Location myLocation;

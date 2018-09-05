@@ -1,19 +1,25 @@
 package holyquran.cls.com.computek_survey.Model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by CLS on 8/13/2018.
  */
-
+@Entity
 public class User {
+    @PrimaryKey
     int id;
-    String full_name;
-    @SerializedName("user_name")
-    String name;
-    String description;
-    String active;
+    @ColumnInfo String full_name;
+    @ColumnInfo String name;
+    @ColumnInfo String description;
+    @ColumnInfo String active;
 
+    public User(){
+    }
     public int getId() {
         return id;
     }

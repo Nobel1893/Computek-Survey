@@ -36,9 +36,8 @@ public class HomeActivity extends MyBaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_courses);
 
-//        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.setCheckedItem(R.id.nav_courses);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
@@ -51,6 +50,7 @@ public class HomeActivity extends MyBaseActivity
             super.onBackPressed();
         }
     }
+
 
 
 
@@ -77,6 +77,9 @@ public class HomeActivity extends MyBaseActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container,fragment)
+                //.add(R.id.container,fragment)
+                //.addToBackStack(null) if used on back will return to the last fragment
+                //if the stack is emty it will call the dafault back action
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

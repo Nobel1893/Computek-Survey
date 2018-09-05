@@ -1,5 +1,6 @@
 package holyquran.cls.com.computek_survey.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
@@ -10,8 +11,11 @@ import android.widget.Spinner;
 
 import holyquran.cls.com.computek_survey.API.APIManager;
 import holyquran.cls.com.computek_survey.Base.MyBaseActivity;
+import holyquran.cls.com.computek_survey.DataBase.VisitorDatabase;
 import holyquran.cls.com.computek_survey.DataHolder;
 import holyquran.cls.com.computek_survey.Model.CoursesResponse;
+import holyquran.cls.com.computek_survey.Model.User;
+import holyquran.cls.com.computek_survey.Model.Visitor;
 import holyquran.cls.com.computek_survey.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +68,7 @@ public class Register extends MyBaseActivity implements View.OnClickListener {
                  sGender="female";
 
              RegisterVisitor(name,Sphone,sGender);
+             startActivity(new Intent(activity,VisitorList.class));
 
 
         }
@@ -71,21 +76,27 @@ public class Register extends MyBaseActivity implements View.OnClickListener {
     public void RegisterVisitor(String name,String phone,String gender){
 
         ShowProgressBar();
-        APIManager.getServices().AddVisitor(DataHolder.loggedInUser.getId(),DataHolder.password,
-                name,phone,gender).enqueue(new Callback<CoursesResponse>() {
-            @Override
-            public void onResponse(Call<CoursesResponse> call, Response<CoursesResponse> response) {
-                HideProgressBar();
-                ShowMessage("success","visitor registered successfuly","ok");
+       APIManager.getServices().AddVisitor(DataHolder.loggedInUser.getId(),DataHolder.password,
+               name,phone,gender).enqueue(new Callback<CoursesResponse>() {
+           @Override
+           public void onResponse(Call<CoursesResponse> call, Response<CoursesResponse> response) {
+               HideProgressBar();
+               ShowMessage("success","visitor registered successfuly","ok");
 
-            }
+           }
 
-            @Override
-            public void onFailure(Call<CoursesResponse> call, Throwable t) {
-                HideProgressBar();
-                ShowMessage("error",t.getLocalizedMessage(),"ok");
-            }
-        });
+           @Override
+           public void onFailure(Call<CoursesResponse> call, Throwable t) {
+               HideProgressBar();
+               ShowMessage("error",t.getLocalizedMessage(),"ok");
+           }
+       });
+
+        Visitor visitor=new Visitor();
+        visitor.setName(name);
+        visitor.setPhone(phone);
+        visitor.setGender(gender);
+        VisitorDatabase.getINSTANCE(getApplicationContext()).visitorDao().AddVisitor(visitor);
     }
     private void initView() {
         username = (TextInputLayout) findViewById(R.id.username);
