@@ -69,7 +69,7 @@ public class CoursesFragment extends MyBaseFragment {
                     adapter.setOnItemClickListner(new CoursesListAdapter.OnItemClickListner() {
                         @Override
                         public void onItemClick(Course course, int pos) {
-                            startActivity(new Intent(activity, Register.class));
+                            startActivity(new Intent(activity, Register.class).putExtra("youtube_id",course.getYoutube_url()));
                         }
                     });
                     CoursesList.setAdapter(adapter);

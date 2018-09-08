@@ -28,7 +28,7 @@ public class Register extends MyBaseActivity implements View.OnClickListener {
     protected TextInputLayout phone;
     protected Spinner gender;
     protected Button submit;
-
+    String youtube_id;
     String genderData[]={"male","female"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class Register extends MyBaseActivity implements View.OnClickListener {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
-
+        youtube_id=getIntent().getStringExtra("youtube_id");
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item,
                         genderData); //selected item will look like a spinner set from XML
@@ -82,7 +82,7 @@ public class Register extends MyBaseActivity implements View.OnClickListener {
            public void onResponse(Call<CoursesResponse> call, Response<CoursesResponse> response) {
                HideProgressBar();
                ShowMessage("success","visitor registered successfuly","ok");
-
+               startActivity(new Intent(activity,YoutubeVideo.class).putExtra("youtube_id",youtube_id));
            }
 
            @Override
