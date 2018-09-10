@@ -10,9 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
+import java.util.Arrays;
 
 import holyquran.cls.com.computek_survey.API.APIManager;
 import holyquran.cls.com.computek_survey.Model.LoginResponse;
@@ -28,15 +37,42 @@ public class Login extends MyBaseActivity {
 
     Button loginButton;
     TextInputLayout username,password;
-
+    CallbackManager callbackManager ;
     AdView adView;
+    private static final String EMAIL = "email";
+    private static final String USER_GENDER = "user_gender";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MobileAds.initialize(this, "ca-app-pub-6399676632787732~6067214600");
 
+        callbackManager= CallbackManager.Factory.create();
+        LoginButton faceBookLoginButton = (LoginButton) findViewById(R.id.login_button);
+
+        faceBookLoginButton.setReadPermissions(Arrays.asList(EMAIL,USER_GENDER));
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        Log.e("facebook",loginResult.getAccessToken().getToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Log.e("facebook","user cancled login");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.e("facebook",exception.getMessage());
+                    }
+                });
         loginButton = findViewById(R.id.login);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -123,6 +159,12 @@ public class Login extends MyBaseActivity {
                     }
                 });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

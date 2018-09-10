@@ -27,7 +27,6 @@ public class MyApplication extends Application {
                 .setNotificationOpenedHandler(new OnNotificationsOpenedHandler())
                 .init();
 
-        MobileAds.initialize(this, "ca-app-pub-6399676632787732~6067214600");
 
     }
 }
